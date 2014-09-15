@@ -144,19 +144,21 @@ max3 x y z = max (max x y) (max y z)
 -- (пользоваться стандартными логическими операциями не следует, обратите внимание на
 --  образцы параметров функции, последняя строка -- "во всех остальных случаях").
 bothTrue :: Bool -> Bool -> Bool
-bothTrue True True = undefined
-bothTrue _  _ = undefined
+bothTrue True True = True
+bothTrue _  _ = False
 
 
 -- д) Функция, возвращающая True, если только один из её аргументов равен True,
 -- и False в противном случае (пользоваться стандартными логическими операциями не следует).
 oneTrue :: Bool -> Bool -> Bool
-oneTrue = undefined
+bothTrue True  _ = True
+bothTrue _  True = True
+bothTrue _  _ = False
 
 -- е) Дана температура в градусах Фаренгейта. Вычислить соответствующую температуру
 -- в градусах Цельсия.
 f2c :: Double -> Double
-f2c = undefined
+f2c a = (a - 32)*5/9
 
 {-
    ж) Найти наибольший общий делитель двух целых чисел, пользуясь
@@ -164,8 +166,10 @@ f2c = undefined
       НОД(a, b) = НОД(b, a mod b), если b ≠ 0; 
       НОД(a, 0) = a.
 -}
--- gcd' :: ???
-gcd' = undefined
+gcd' :: Int -> Int -> Int
+gcd' a b = | a > b  = gcd' a-b, b
+           | a < b  = gcd' b-a, a
+           | a == b = a
 
 -- з) Функция, возвращающая название дня недели по его номеру (от 1 до 7),
 --    если номер неправильный, генерируется исключение (функция error).
