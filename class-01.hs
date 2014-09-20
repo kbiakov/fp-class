@@ -68,18 +68,18 @@ avg3 a b c = (a + b + c)/3
    обращая внимание на обозначения и приоритеты операций, стандартные функции,
    расстановку скобок:
 
-    2 + 3											5
-    mod 10 4										2
-    10 `mod` 4										2
-    True && 5 < 10									True
-    5 < 7 || 10 > 3									True
-    sqrt (-2)										NaN
-    sqrt (sqrt 16)									2.0
-    let x = 4 in (sin x)^2 + (cos x)^2				1.0
-    x												Not in scope: data constructor `X'
-    7^(-1)											Exception: Negative exponent
-    error "AAAA!!!!"								Exception: AAAA!!!!
-    12345^54321										очень большое число
+    2 + 3						5
+    mod 10 4						2
+    10 `mod` 4						2
+    True && 5 < 10					True
+    5 < 7 || 10 > 3					True
+    sqrt (-2)						NaN
+    sqrt (sqrt 16)					2.0
+    let x = 4 in (sin x)^2 + (cos x)^2			1.0
+    x							Not in scope: data constructor `X'
+    7^(-1)						Exception: Negative exponent
+    error "AAAA!!!!"					Exception: AAAA!!!!
+    12345^54321						очень большое число
     2 < 3 || 9999954321^99912345 > 12345^54321		True
 
 -}
@@ -104,8 +104,8 @@ avg3 a b c = (a + b + c)/3
    sqrt 4.0						Floating a => a
    2+3							Num a => a
    5 < 7						Bool
-   if 2 > 3 then 7 else 5		Num a => a
-   5 > 6 && False				Bool
+   if 2 > 3 then 7 else 5				Num a => a
+   5 > 6 && False					Bool
 	
    Команда ":set +t" включает режим, при котором печатается тип каждого вычисляемого выражения.
    Команда ":set +s" включает режим, при котором печатается время вычисления каждого выражения.
