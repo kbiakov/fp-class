@@ -48,7 +48,7 @@ avg a b = (a + b)/2
 -}
 
 avg3 :: Double -> Double -> Double -> Double
-avg3 a b c = (a+b+c)/3
+avg3 a b c = (a + b + c)/3
 
 {-
    Результаты проверки:
@@ -68,18 +68,18 @@ avg3 a b c = (a+b+c)/3
    обращая внимание на обозначения и приоритеты операций, стандартные функции,
    расстановку скобок:
 
-    2 + 3						5
-    mod 10 4						2
-    10 `mod` 4						2
-    True && 5 < 10					True
-    5 < 7 || 10 > 3					True
-    sqrt (-2)						NaN
-    sqrt (sqrt 16)					2.0
-    let x = 4 in (sin x)^2 + (cos x)^2			1.0
-    x							Not in scope: data constructor `X'
-    7^(-1)						Exception: Negative exponent
-    error "AAAA!!!!"					Exception: AAAA!!!!
-    12345^54321						очень большое число
+    2 + 3											5
+    mod 10 4										2
+    10 `mod` 4										2
+    True && 5 < 10									True
+    5 < 7 || 10 > 3									True
+    sqrt (-2)										NaN
+    sqrt (sqrt 16)									2.0
+    let x = 4 in (sin x)^2 + (cos x)^2				1.0
+    x												Not in scope: data constructor `X'
+    7^(-1)											Exception: Negative exponent
+    error "AAAA!!!!"								Exception: AAAA!!!!
+    12345^54321										очень большое число
     2 < 3 || 9999954321^99912345 > 12345^54321		True
 
 -}
@@ -98,14 +98,14 @@ avg3 a b c = (a+b+c)/3
   классу типов Num (имеет экземпляр класса типов Num, является числовым типом).
 
   Определите и сохраните в этом файле типы следующих выражений:
-   5					Num a => a
-   5.0					Fractional a => a
-   sqrt 4				Floating a => a
-   sqrt 4.0				Floating a => a
-   2+3					Num a => a
-   5 < 7				Bool
+   5							Num a => a
+   5.0							Fractional a => a
+   sqrt 4						Floating a => a
+   sqrt 4.0						Floating a => a
+   2+3							Num a => a
+   5 < 7						Bool
    if 2 > 3 then 7 else 5		Num a => a
-   5 > 6 && False			Bool
+   5 > 6 && False				Bool
 	
    Команда ":set +t" включает режим, при котором печатается тип каждого вычисляемого выражения.
    Команда ":set +s" включает режим, при котором печатается время вычисления каждого выражения.
@@ -147,18 +147,17 @@ bothTrue :: Bool -> Bool -> Bool
 bothTrue True True = True
 bothTrue _  _ = False
 
-
 -- д) Функция, возвращающая True, если только один из её аргументов равен True,
 -- и False в противном случае (пользоваться стандартными логическими операциями не следует).
 oneTrue :: Bool -> Bool -> Bool
-bothTrue True  _ = True
-bothTrue _  True = True
+bothTrue True False = True
+bothTrue False True = True
 bothTrue _  _ = False
 
 -- е) Дана температура в градусах Фаренгейта. Вычислить соответствующую температуру
 -- в градусах Цельсия.
 f2c :: Double -> Double
-f2c a = (a - 32)*5/9
+f2c a = (a - 32) * 5/9
 
 {-
    ж) Найти наибольший общий делитель двух целых чисел, пользуясь
@@ -167,14 +166,22 @@ f2c a = (a - 32)*5/9
       НОД(a, 0) = a.
 -}
 gcd' :: Int -> Int -> Int
-gcd' a b = | a > b  = gcd' a-b, b
-           | a < b  = gcd' b-a, a
-           | a == b = a
+gcd' a b = gcdAbs (abs a) (abs b)
+     where gcdAbs a 0 = a
+           gcdAbs a b = gcd' b (a `mod` b)
 
 -- з) Функция, возвращающая название дня недели по его номеру (от 1 до 7),
 --    если номер неправильный, генерируется исключение (функция error).
 dayOfWeek :: Int -> String
-dayOfWeek = undefined
+dayOfWeek 1 = "Monday"
+dayOfWeek 2 = "Tuesday"
+dayOfWeek 3 = "Wednesday"
+dayOfWeek 4 = "Thursday"
+dayOfWeek 5 = "Friday"
+dayOfWeek 6 = "Saturday"
+dayOfWeek 7 = "Sunday"
+dayOfWeek _ = error "Invalid number"
+
 
 
 -- Далее типовые аннотации, если их нет, следует писать самостоятельно.
@@ -185,9 +192,9 @@ dayOfWeek = undefined
 -- Определение знака числа (-1, 0, 1). Класс типов Ord определяет операции сравнения.
 sign :: (Num a, Ord a) => a -> Int
 sign a
-   | a < 0 = -1
-   | a == 0 = 0
-   | otherwise = 1
+  | a < 0 = -1
+  | a == 0 = 0
+  | otherwise = 1
 
 {-
    а) Найти значение функции f(x), вычисляемое по правилу:
@@ -195,13 +202,20 @@ sign a
 	  x^2,  если 0 < x < 2,
           4,    если x ≥ 2.
 -}
-
-eval_f = undefined
+eval_f :: (Num a, Ord a) => a -> a
+eval_f x
+  | x <= 0 = -x
+  | x >= 2 = 4
+  | otherwise = x*x
 
 -- б) Написать функцию, возвращающую текстовую характеристику ("hot", "warm", "cool", "cold")
 -- по заданному значению температуры в градусах Цельсия.
 describeTemperature :: Double -> String
-describeTemperature = undefined
+describeTemperature a
+  | a <  0 = "cold"
+  | a < 10 = "cool"
+  | a < 30 = "warm"
+  | otherwise = "hot"
 
 {- 
    в) (*) Дан список температур в градусах Фаренгейта. Вывести для каждого значения
@@ -219,36 +233,68 @@ describeTemperature = undefined
 -- Пример. Вычислить сумму всех целых чисел от 1 до n (где n >= 1):
 sum_n 1 = 1
 sum_n n
-  | n > 1 = n + sum_n (n-1)
+  | n > 1 = n + sum_n (n - 1)
   | otherwise = error "n should be >= 1"
 
 -- а) Вычислить сумму всех целых чисел от a до b включительно.
-sum_ab = undefined
+sum_ab :: Int -> Int -> Int
+sum_ab a b
+  | a == b = b
+  | a < b = b + sum_ab a (b - 1)
+  | otherwise = error "a should be <= b"
 
 {-
    б) Числовая последовательность определяется следующим образом:
       a1 = 1, a2 = 2, a3 = 3, a_k = a_{k−1} + a_{k−2} − 2*a_{k−3}, k = 4, 5, ...
       Вычислить её n-й элемент.
 -}
-eval_a_n = undefined
+eval_a_n :: Int -> Int
+eval_a_n 1 = 1
+eval_a_n 2 = 2
+eval_a_n 3 = 3
+eval_a_n n
+  | n > 3 = eval_a_n (n - 1) + eval_a_n (n - 2) - 2 * eval_a_n (n - 3)
+  | otherwise = error "Invalid n"
 
 -- в) Вычислить, пользуясь рекурсией, n-ю степень числа a (n - целое):
-pow = undefined
+pow :: (Num a, Ord a, Fractional a) => a -> Int -> a
+pow a 0 = 1
+pow a n
+  | n > 1 = a * pow a (n - 1) 
+  | otherwise = error "Invalid n"
 
 -- г) Пользуясь ранее написанной функцией pow, вычислить сумму: 1^k + 2^k + ... + n^k.
-sum_nk = undefined
+sum_nk :: (Num a, Ord a, Fractional a) => Int -> Int -> a
+sum_nk n 1 = sum_n n
+sum_nk 1 k = 1
+sum_nk n k
+  | n > 1 = pow n k + sum_nk (n - 1) k
+  | otherwise = error "n should be >= 1"
 
 -- д) Сумма факториалов чисел от 1 до n.
+sum_fact :: Int -> Int
 sum_fact 1 = 1
-sum_fact n = undefined
+sum_fact n
+  | n > 1 = fact n + sum_fact (n - 1)
+  | otherwise = error "n should be >= 1"
   where
-    fact n = undefined
+    fact 0 = 1
+    fact n | n > 0 = n * fact (n - 1)
 
 -- е) Количество цифр целого числа
-number_digits = undefined
+number_digits :: Int -> Int
+number_digits a
+  | a < 0 = number_digits (abs a)
+  | a < 10 = 1
+  | otherwise = 1 + number_digits (a `div` 10)
 
 -- ж) Проверить, является ли заданное число простым.
-isPrime = undefined
+isPrime :: Int -> Bool
+isPrime n = iter 2 n
+  where iter i n
+  | i * i > n = True
+  | n `mod` i == 0 = False
+  | otherwise = iter (i + 1) n
 
 -- 8) Разное
 
@@ -259,7 +305,13 @@ isPrime = undefined
   не делятся на 400 (например, годы 300, 1300 и 1900 не являются високосными,
   а 1200 и 2000 — являются).
 -}
-
-nDays year = undefined
+nDays :: Int -> Int
+nDays year
+  | isLeap year = 366
+  | otherwise   = 365
   where
-    isLeap = undefined
+    isLeap :: Int -> Bool
+    isLeap = year
+	| year `mod` 4 /= 0 = False
+	| (year `mod` 100 == 0) && (year `mod` 400 /= 0) = False
+	| otherwise = True
