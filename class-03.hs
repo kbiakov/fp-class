@@ -86,8 +86,8 @@ f2e n = map comp (filter (\x -> length x <= n) (map toBin (take (2^n) (iterate (
   where comp = (\x -> (replicate (n - length x) '0') ++ x)
         toBin 0 = []
         toBin n 
-		    | n `mod` 2 ==0 = toBin (div k 2) ++ ['0']
-		    | otherwise     = toBin (div k 2) ++ ['1']
+        | n `mod` 2 ==0 = toBin (div k 2) ++ ['0']
+        | otherwise     = toBin (div k 2) ++ ['1']
 
 {-
 3. Группировка списков.
@@ -102,9 +102,9 @@ f3b :: [Point] -> [[Point]]
 f3b = groupBy (\x y -> quar x == quart y)
   where quart (x, y)
     | x >= 0 && y >= 0 = 1
-	  | x < 0 && y >= 0 = 2
-	  | x < 0 && y < 0 = 3
-	  | x >= 0 && y < 0 = 4
+    | x < 0 && y >= 0 = 2
+    | x < 0 && y < 0 = 3
+    | x >= 0 && y < 0 = 4
 -- c) Дан список и ненулевое натуральное число n. Разбить список на подсписки длиной n каждый.
 -- Последний подсписок может содержать менее n элементов.
 f3c :: [a] -> Int -> [[a]]
