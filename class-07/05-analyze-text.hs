@@ -25,9 +25,9 @@ incKey key map = case (Map.lookup key map) of
 freqPunct content = Map.keys $ Map.filter (== max) map0
   where
     map0 = foldl' (\acc x -> 
-	    | isPunctuation x = (incKey x acc)
-	    | otherwise = acc)
-	  Map.empty content
+      | isPunctuation x = (incKey x acc)
+      | otherwise = acc)
+    Map.empty content
     max = maximum $ Map.elems map0
 
 freqWords content = take 10 $ sortBy (flip compare `on` snd) $ Map.toList map0
@@ -38,24 +38,24 @@ freqWords content = take 10 $ sortBy (flip compare `on` snd) $ Map.toList map0
 freqChars content = take 10 $ sortBy (flip compare `on` snd) $ Map.toList map0
   where
     map0 = foldl' (\acc x -> 
-	    | x == ' ' = acc 
-	    | otherwise = incKey x acc)
-	  Map.empty content
+      | x == ' ' = acc 
+      | otherwise = incKey x acc)
+    Map.empty content
 	
 freqBigrs content = take 10 $ sortBy (flip compare `on` snd) $ Map.toList map0
   where
     map0 = fst $ foldl' (\(acc, prev) x ->
-	    | x == ' ' || prev == ' ' = acc
-	    | otherwise = incKey [ prev : x : [] ] acc, x)
-	  (Map.empty, ' ') content	
+      | x == ' ' || prev == ' ' = acc
+      | otherwise = incKey [ prev : x : [] ] acc, x)
+    (Map.empty, ' ') content	
 
 freqTrigs content = take 10 $ sortBy (flip compare `on` snd) $ Map.toList map0
   where
     list = filter (\x -> isLetter x || x == ' ') content
     (map0, _, _) = foldl' (\(acc, p1, p0) x ->
-	    | x == ' ' || p0 == ' ' || p1 == ' ' = acc
-	    | otherwise = incKey [ p1 : p0 : x : [] ] acc, p0, x)
-	  (Map.empty, ' ', ' ') list
+      | x == ' ' || p0 == ' ' || p1 == ' ' = acc
+      | otherwise = incKey [ p1 : p0 : x : [] ] acc, p0, x)
+    (Map.empty, ' ', ' ') list
 	
 main = do
   (fname : _) <- getArgs
