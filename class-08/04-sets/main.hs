@@ -19,7 +19,7 @@ test3 s = not $ contains (remove (add (add (add s 2) 2) 8) 2) 2
 main = do
   print $ test1 (empty :: LS.Set) && test1 (empty :: TS.Set)
   gen <- newStdGen
-  list <- randomList $ take 10 $ randomRs(1, 100)
+  list <- take 10 $ randomRs (1, 100)
   print $ test2 (empty :: LS.Set) list && test2 (empty :: TS.Set) list
   print $ test3 (empty :: LS.Set) && test3 (empty :: TS.Set)
   
