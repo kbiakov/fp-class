@@ -30,7 +30,7 @@ instance AbstractGraph Graph where
   
   edgeIn (Graph arr) (b, e)
     | (not.null) $ arr ! b = (not.null) $ filter (\(x, w) -> x == e) $ arr ! b
-	  | otherwise = False
+    | otherwise = False
 	
   adjacent (Graph arr) v = map (\(x, w) -> x) $ arr ! v
   
@@ -40,9 +40,9 @@ instance AbstractGraph Graph where
   
   edges (Graph arr) = concat $ zipWith (\v adjV -> map (\(x, w) -> (v, x, w)) adjV) indices' elems'
     where
-	    elems' = elems arr
+      elems' = elems arr
       indices' = indices arr
 
   nodesBounds (Graph arr) = (head indices', last indices')
     where
-	    indices' = indices arr
+      indices' = indices arr
