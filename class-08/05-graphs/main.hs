@@ -13,7 +13,7 @@ createGraph fname = do
   
   let edgeList = foldr (\ls acc ->
     | null ls = acc
-	  | otherwise = (let [b, e, w] = ls in (read b, read e, read w ) : acc)
+    | otherwise = (let [b, e, w] = ls in (read b, read e, read w ) : acc)
   ) [] $ tail data'
   
   return (numbVert, orientation, edgeList)
