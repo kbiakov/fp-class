@@ -65,7 +65,6 @@ readData fname = do
 main = do
   (fname, n) <- parseArgs `fmap` getArgs
   ps <- readData fname
-  print $ toList ps
   print $ reduceNF n (toList ps)
   print $ reduceNF n (toMaybe ps)
   print $ reduceNF n (toEither ps)
