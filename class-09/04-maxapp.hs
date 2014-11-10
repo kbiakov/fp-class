@@ -30,7 +30,7 @@ main = do
   print $ maxApp3 (Just 1) (Just 3) (Just 2)
   -- список
   print $ maxApp [Just 1, Just 5, Just 2, Just 4, Just 3]
-  print $ maxApp [(Left "a"), (Right "c"), (Right "b")]
+  print $ maxApp [Left "a", Right "c", Right "b"]
   -- Either String
   print $ maxApp3 (Right "a") (Left "b") (Right "b")
   -- IO
