@@ -73,4 +73,4 @@ nfa3 = (['0','1'], [1, 2, 3, 4], 1, tf, [4])
 -}
 
 classify :: [NFA] -> [String] -> [(NFA, [String])]
-classify nfa s = nfa >>= \x ->  return (x, filter (accept x) s) 
+classify nfa s = nfa >>= \x -> return (x, filter (accept x) s) 
