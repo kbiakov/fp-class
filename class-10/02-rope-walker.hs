@@ -29,9 +29,9 @@ updatePole :: Pole -> Maybe Pole
 updatePole p = if unbalanced p then imbalanced p else Right p
   where
     unbalanced (l, r) = abs (l - r) >= balance
-	imbalanced (l, r)
-	  | l > r = Left "Imbalanced right"
-	  | l < r = Left "Imbalanced left"
+    imbalanced (l, r)
+      | l > r = Left "Imbalanced right"
+      | l < r = Left "Imbalanced left"
 
 landLeft :: Birds -> Pole -> Maybe Pole
 landLeft n (left, right) = updatePole (left + n, right)
@@ -56,7 +56,7 @@ interpretate s =
   in case head s of
     'L' -> landLeft  (bs s)
     'R' -> landRight (bs s)
-	  'B' -> banana
+    'B' -> banana
     'O' -> landBoth  (bs s)
     'U' -> unlandAll
 
