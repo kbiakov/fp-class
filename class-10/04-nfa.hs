@@ -22,9 +22,9 @@ isCorrect :: NFA -> Bool
 isCorrect (abc, sts, inSt, trFunc, acSt) = corAbc && corSts && corBeg && corEnd
   where
     corAbc = not . null $ abc
-	corSts = not . null $ sts
-	corBeg = inSt `elem` sts
-	corEnd = acSt `intersect` sts == acSt
+    corSts = not . null $ sts
+    corBeg = inSt `elem` sts
+    corEnd = acSt `intersect` sts == acSt
 
 -- в дальнейшем может пригодиться функция whileM,
 -- которая собирает результаты в список, пока истинно
