@@ -40,16 +40,16 @@ selectionSort xs = elems $ runSTArray $ do
 
 insertingSort :: (Ord a) => [a] -> [a]
 insertingSort xs = elems $ runSTArray $ do
-	let n = length xs
-	arr <- newListArray (0, n-1) xs
-	forM_ [1..n-1] $ \i -> do
-	  forM_ [1..i] $ \j -> do
-		aij <- readArray arr (i-j)
-		aijNext <- readArray arr (i-j+1)
-		if (aijNext < aij)
-		  then swapElems (i-j+1) (i-j) arr
-		  else return ()
-	return arr
+  let n = length xs
+  arr <- newListArray (0, n-1) xs
+  forM_ [1..n-1] $ \i -> do
+    forM_ [1..i] $ \j -> do
+      aij <- readArray arr (i-j)
+      aijNext <- readArray arr (i-j+1)
+      if (aijNext < aij)
+        then swapElems (i-j+1) (i-j) arr
+        else return ()
+  return arr
 
 bubbleSortTest    = bubbleSort    [1, 6, 2, 5, 3, 4] == [1, 2, 3, 4, 5, 6]
 selectionSortTest = selectionSort [1, 6, 2, 5, 3, 4] == [1, 2, 3, 4, 5, 6]
