@@ -75,8 +75,6 @@ getFinalVars = do
 getSolution :: NDS a -> ProblemState -> Maybe a
 getSolution c i = listToMaybe (evalStateT c i)
 
-
-
 isSolution = do
   a <- getVar "goat"
   b <- getVar "cabbage"
@@ -102,24 +100,24 @@ tryAllValues var = do
   c <- isConsistent True
   case c of 
    t| t == False && s == "Bank1" && count < 3 -> setVar cabbageOrWolfElseGoat str 
-	| t == False -> setVar "goat" str `mplus` setVar "wolf" str `mplus` setVar "cabbage" str
-	| t == True && str == "Bank2" -> setVar cabbageOrWolfElseGoat str
-	| otherwise -> return ()
+    | t == False -> setVar "goat" str `mplus` setVar "wolf" str `mplus` setVar "cabbage" str
+    | t == True && str == "Bank2" -> setVar cabbageOrWolfElseGoat str
+    | otherwise -> return ()
 
 result :: Monad m => Bool -> [Predicate] -> Variables -> [Variables] -> m [Variables]               
 result True _ vars plan = return plan
 result isSolution' cons vars plan = do
   vs <- return  $ (`getSolution` (PS vars cons)) $ do 
-	tryAllValues "farmer"
-	getFinalVars
-	let s = runStateT isSolution (PS (fromJust vs) cons)                           
-	result (fst .head $ s) cons (fromJust vs) (plan ++ [(fromJust vs)])
+    tryAllValues "farmer"
+    getFinalVars
+    let s = runStateT isSolution (PS (fromJust vs) cons)                           
+    result (fst .head $ s) cons (fromJust vs) (plan ++ [(fromJust vs)])
 
 main :: IO ()        
 main = do
   let
-	vars = [("cabbage", "Bank1"), ("wolf", "Bank1"), ("goat", "Bank1"), ("farmer", "Bank1")]
-	cons = [(Or (Equal "goat" "farmer") (And (Not (Equal "wolf" "goat")) (Not (Equal "goat" "cabbage"))))]
-	problem = PS vars cons
+    vars = [("cabbage", "Bank1"), ("wolf", "Bank1"), ("goat", "Bank1"), ("farmer", "Bank1")]
+    cons = [(Or (Equal "goat" "farmer") (And (Not (Equal "wolf" "goat")) (Not (Equal "goat" "cabbage"))))]
+    problem = PS vars cons
   plan <- result False  cons vars [vars]
   mapM_ print plan
